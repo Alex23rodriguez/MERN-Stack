@@ -4,6 +4,8 @@ export default class RestaurantsDAO {
     if (restaurants) return;
     try {
       restaurants = conn.db(process.env.DB_NAMESPACE).collection("restaurants");
+      // to test if properly connected:
+      // console.log(await restaurants.findOne());
     } catch (e) {
       console.error(
         `Unable to establich a collection handle in restaurantsDAO: ${e}`
@@ -39,8 +41,10 @@ export default class RestaurantsDAO {
 
     try {
       const restaurantsList = await displayCursor.toArray();
-      // const totalNumRestaurants = await restaurants.countDocuments(query);
-      const totalNumRestaurants = cursor.count();
+      // const totalNumRestaurants = await restaurants.countDocuments(query); // slow if many
+      const totalNumRestaurants = await restaurants.estimatedDocumentCount(
+        query
+      ); // fast
 
       return { restaurantsList, totalNumRestaurants };
     } catch (e) {

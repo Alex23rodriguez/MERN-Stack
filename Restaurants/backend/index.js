@@ -15,14 +15,14 @@ MongoClient.connect(process.env.DB_URI, {
   useNewUrlParser: true,
 })
   .catch((err) => {
-    console.log(err);
+    console.error(err);
     process.exit(1);
   })
   .then(async (client) => {
     await RestaurantsDAO.injectDB(client);
     console.log("connected to database");
     app.listen(port, (err) => {
-      if (err) console.log("Error: ", err);
+      if (err) console.error("Error: ", err);
       else console.log(`listening on port ${port}`);
     });
   });
