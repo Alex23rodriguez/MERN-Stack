@@ -14,11 +14,20 @@ export default class RestaurantsCtrl {
     } else if (q.name) {
       filters.name = q.name;
     }
-    const response = await RestaurantsDAO.getRestaurants({
-      filters,
-      restaurantsPerPage: perPage,
+    const { restaurantsList, totalNumRestaurants } =
+      await RestaurantsDAO.getRestaurants({
+        filters,
+        restaurantsPerPage: perPage,
+        page,
+      });
+
+    let response = {
+      restaurants: restaurantsList,
       page,
-    });
+      filters,
+      entries_per_page: perPage,
+      total_results: totalNumRestaurants,
+    };
 
     res.json(response);
   }
