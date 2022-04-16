@@ -58,11 +58,14 @@ export default class ReviewsCtrl {
 
   static async apiDeleteReview(req, res, next) {
     try {
-      const reviewId = req.query._id;
+      const reviewId = req.query.id;
       const userId = req.body.user_id;
       //   console.log(reviewId);
 
       const reviewResponse = await ReviewsDAO.deleteReview(reviewId, userId);
+      if (reviewResponse.error) {
+        throw new Error("Unable to delete review. Bad request");
+      }
 
       if (reviewResponse.deletedCount === 0) {
         throw new Error(
