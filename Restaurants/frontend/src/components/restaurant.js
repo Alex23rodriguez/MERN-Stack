@@ -17,7 +17,7 @@ const Restaurant = (props) => {
   const getRestaurant = (id) => {
     RestaurantDataService.get(id)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setRestaurant(response.data);
       })
       .catch((e) => {
@@ -26,7 +26,6 @@ const Restaurant = (props) => {
   };
 
   useEffect(() => {
-    console.log(props);
     getRestaurant(restId);
   }, [restId]);
 
@@ -92,10 +91,8 @@ const Restaurant = (props) => {
                             <Link
                               to={{
                                 pathname: "/restaurants/" + restId + "/review",
-                                state: {
-                                  currentReview: review,
-                                },
                               }}
+                              state={{ currentReview: review }}
                               className='btn btn-primary col-lg-5 mx-1 mb-1'
                             >
                               Edit
@@ -116,7 +113,6 @@ const Restaurant = (props) => {
         </div>
       ) : (
         <div>
-          {console.log(`restaurant: ${Object.keys(restaurant)}`)}
           <br />
           <p>Restaurant not found</p>
         </div>

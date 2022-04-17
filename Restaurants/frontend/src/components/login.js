@@ -13,7 +13,6 @@ function Login(props) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
-    console.log(`user from login: ${user.id}`);
   };
 
   const login = () => {
